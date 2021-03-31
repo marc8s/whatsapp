@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openHome(){
         startActivity(new Intent(this, HomeActivity.class));
-        finish();
+        //finish();
     }
 
 

@@ -16,4 +16,7 @@
     <string name="user_unregisted">O usuário não esta cadastrado!</string>
     <string name="email_password_wrong">Email e senha não correspodem ao usuário cadastrado!</string>
     <string name="error_login">\"Erro ao logar usuário: \"</string>
+    <string name="search">Pesquisar</string>
+    <string name="configurations">Configurações</string>
+    <string name="logout">Sair</string>
 </resources>
