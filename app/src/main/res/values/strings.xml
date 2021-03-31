@@ -6,4 +6,11 @@
     <string name="bt_login">Logar</string>
     <string name="bt_register">Cadastrar</string>
     <string name="register">Não tem conta? Cadastre-se</string>
+    <string name="password_missing">Prencha o campo senha!</string>
+    <string name="email_missing">Prencha o campo email!</string>
+    <string name="name_missing">Prencha o campo nome!</string>
+    <string name="password_weak">Digite uma senha mais forte!</string>
+    <string name="email_invalid">Digite um email válido!</string>
+    <string name="account_duplicate">Esta conta já foi cadastrada!</string>
+    <string name="error_register">\"Erro ao cadastrar usuário: \"</string>
 </resources>
