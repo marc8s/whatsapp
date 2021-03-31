@@ -13,4 +13,7 @@
     <string name="email_invalid">Digite um email válido!</string>
     <string name="account_duplicate">Esta conta já foi cadastrada!</string>
     <string name="error_register">\"Erro ao cadastrar usuário: \"</string>
+    <string name="user_unregisted">O usuário não esta cadastrado!</string>
+    <string name="email_password_wrong">Email e senha não correspodem ao usuário cadastrado!</string>
+    <string name="error_login">\"Erro ao logar usuário: \"</string>
 </resources>
