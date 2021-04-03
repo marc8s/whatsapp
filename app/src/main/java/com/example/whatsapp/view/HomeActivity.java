@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -64,6 +65,10 @@ public class HomeActivity extends AppCompatActivity {
                 logoutUser();
                 finish();
                 break;
+            case R.id.menuConfigurations:
+                openConfigurations();
+                //finish();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -76,5 +81,11 @@ public class HomeActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+    }
+
+    public void openConfigurations(){
+        Intent intent = new Intent();
+        intent.setClass(getApplicationContext(), ConfigurationsUserActivity.class);
+        startActivity(intent);
     }
 }
