@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Whatsapp">
-        <activity android:name=".view.ConfigurationsUserActivity"></activity>
+        <activity
+            android:name=".view.ConfigurationsUserActivity"
+            android:parentActivityName=".view.HomeActivity">
+
+        </activity>
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.MainActivity">
