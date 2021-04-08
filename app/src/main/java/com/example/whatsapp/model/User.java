@@ -11,10 +11,9 @@ public class User {
     }
 
     public void save(){
-        DatabaseReference mReferenceFirebase = ConfigFirebase.getFirebaseDatabase();
-        mReferenceFirebase.child("user")
-                .child(this.id)
-                .setValue(this);
+        DatabaseReference referenceFirebase = ConfigFirebase.getFirebaseDatabase();
+        DatabaseReference user = referenceFirebase.child("user").child(getId());
+        user.setValue(this);
     }
 
     public String getName() {

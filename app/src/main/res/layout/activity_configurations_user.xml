@@ -20,7 +20,7 @@
         android:id="@+id/circleImageViewProfilePic"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:background="@color/gray"
+        android:background="@color/white"
         android:src="@drawable/padrao"
         android:layout_marginTop="32dp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -86,13 +86,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    String idUser = Base64Custom.encodeBase64(mUser.getEmail());
-                    mUser.setId(idUser);
-                    mUser.save();
-                    /*fecha tela de login e volta pra intro_register
-                    onde havera uma validação na Main.Activity
-                    */
-                    finish();
+                    try{
+                        String idUser = Base64Custom.encodeBase64(mUser.getEmail());
+                        mUser.setId(idUser);
+                        mUser.save();
+                        finish();
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 }else{
                     String exception = "";
                     try{
