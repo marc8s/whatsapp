@@ -7,33 +7,57 @@
     tools:context=".view.ConfigurationsUserActivity">
 
     <include
-        layout="@layout/toolbar"
         android:id="@+id/includeToobar"
+        layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageViewProfilePic"
         android:layout_width="160dp"
         android:layout_height="160dp"
+        android:layout_marginTop="32dp"
         android:background="@color/white"
         android:src="@drawable/padrao"
-        android:layout_marginTop="32dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/includeToobar"/>
+        app:layout_constraintTop_toBottomOf="@+id/includeToobar" />
+
+    <ImageButton
+        android:id="@+id/imageButtonCamera"
+        android:layout_width="48dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_camera"
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageViewProfilePic" />
+
+    <ImageButton
+        android:id="@+id/imageButtonGallery"
+        android:layout_width="39dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="12dp"
+
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_photo_library"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageButtonCamera"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageViewProfilePic" />
 
     <LinearLayout
         android:id="@+id/linearLayoutConfig"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
         android:layout_marginTop="32dp"
         android:orientation="horizontal"
+        android:padding="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/circleImageViewProfilePic">
@@ -45,8 +69,8 @@
             android:layout_weight="1"
             android:background="@color/white"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="@string/nome_do_usu_rio" />
+            android:hint="@string/nome_do_usu_rio"
+            android:inputType="textPersonName" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -60,10 +84,11 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/warning_config"
         android:padding="16dp"
+        android:text="@string/warning_config"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutConfig"/>
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutConfig" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
