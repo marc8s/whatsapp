@@ -1,6 +1,7 @@
 package com.example.whatsapp.view;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -9,6 +10,8 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -16,6 +19,8 @@ import android.widget.ImageButton;
 
 import com.example.whatsapp.R;
 import com.example.whatsapp.helper.Permission;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ConfigurationsUserActivity extends AppCompatActivity {
 
@@ -26,6 +31,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
     private ImageButton mImageButtonCamera, mImageButtonGallery;
     private static final int mSELECTION_CAMERA = 100;
     private static final int mSELECTION_GALLERY = 200;
+    private CircleImageView mCircleImageViewProfile;
 
 
     @Override
@@ -37,6 +43,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
 
         mImageButtonCamera = findViewById(R.id.imageButtonCamera);
         mImageButtonGallery = findViewById(R.id.imageButtonGallery);
+        mCircleImageViewProfile = findViewById(R.id.circleImageViewProfilePic);
 
         Toolbar toolbar = findViewById(R.id.toolbarMain);
         toolbar.setTitle(R.string.config);
@@ -59,9 +66,38 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
         mImageButtonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                if(i.resolveActivity(getPackageManager())!= null){
+                    startActivityForResult(i, mSELECTION_GALLERY);
+                }
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK){
+            Bitmap image = null;
+
+            try {
+                switch (requestCode){
+                    case mSELECTION_CAMERA:
+                        image = (Bitmap) data.getExtras().get("data");
+                        break;
+                    case mSELECTION_GALLERY:
+                        Uri localImageSelected = data.getData();
+                        image = MediaStore.Images.Media.getBitmap(getContentResolver(), localImageSelected);
+                        break;
+                }
+                if(image != null){
+                    mCircleImageViewProfile.setImageBitmap(image);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
