@@ -29,4 +29,6 @@
     <string name="permission_denied">Permissões Negadas</string>
     <string name="message_permission_denied">Para utilizar o app é necessário aceitar as permissões</string>
     <string name="confirm">Confirmar</string>
+    <string name="error_upload">Erro ao fazer upload da imagem</string>
+    <string name="success_upload">Sucesso ao fazer upload da imagem</string>
 </resources>
