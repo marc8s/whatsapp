@@ -15,17 +15,20 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.whatsapp.R;
 import com.example.whatsapp.config.ConfigFirebase;
-import com.example.whatsapp.helper.Base64Custom;
 import com.example.whatsapp.helper.Permission;
 import com.example.whatsapp.helper.UserFirebase;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -43,6 +46,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
     private static final int mSELECTION_CAMERA = 100;
     private static final int mSELECTION_GALLERY = 200;
     private CircleImageView mCircleImageViewProfile;
+    private EditText mEditProfileName;
     private StorageReference mStorageReference;
     private String mIdUser;
 
@@ -61,6 +65,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
         mImageButtonCamera = findViewById(R.id.imageButtonCamera);
         mImageButtonGallery = findViewById(R.id.imageButtonGallery);
         mCircleImageViewProfile = findViewById(R.id.circleImageViewProfilePic);
+        mEditProfileName = findViewById(R.id.editTextTextPersonNameConfig);
 
         Toolbar toolbar = findViewById(R.id.toolbarMain);
         toolbar.setTitle(R.string.config);
@@ -68,6 +73,17 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //alterar suporte bar adicionando o botão voltar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //recuperar dados usuario
+        FirebaseUser user = UserFirebase.getUser();
+        Uri url = user.getPhotoUrl();
+        if(url != null){
+            Glide.with(ConfigurationsUserActivity.this)
+                    .load(url)
+                    .into(mCircleImageViewProfile);
+        }else{
+            mCircleImageViewProfile.setImageResource(R.drawable.padrao);
+        }
+        mEditProfileName.setText(user.getDisplayName());
 
         mImageButtonCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +132,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
                     byte[] dadosImage = baos.toByteArray();
 
                     //salvar imagem no firebase
-                    StorageReference imageRef = mStorageReference
+                    final StorageReference imageRef = mStorageReference
                             .child("images")
                             .child("profile")
                             .child(mIdUser + ".jpeg");
@@ -130,6 +146,14 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             Toast.makeText(ConfigurationsUserActivity.this, R.string.success_upload, Toast.LENGTH_SHORT).show();
+                            //atualizar foto
+                            imageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Uri> task) {
+                                    Uri url = task.getResult();
+                                    updateProfilePicUser(url);
+                                }
+                            });
                         }
                     });
                 }
@@ -137,6 +161,10 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void updateProfilePicUser(Uri url){
+        UserFirebase.updatePicUser(url);
     }
 
     @Override
