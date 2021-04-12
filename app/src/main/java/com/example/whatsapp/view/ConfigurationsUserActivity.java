@@ -17,6 +17,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,6 +25,7 @@ import com.example.whatsapp.R;
 import com.example.whatsapp.config.ConfigFirebase;
 import com.example.whatsapp.helper.Permission;
 import com.example.whatsapp.helper.UserFirebase;
+import com.example.whatsapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,9 +48,11 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
     private static final int mSELECTION_CAMERA = 100;
     private static final int mSELECTION_GALLERY = 200;
     private CircleImageView mCircleImageViewProfile;
+    private ImageView mImageViewUpdateName;
     private EditText mEditProfileName;
     private StorageReference mStorageReference;
     private String mIdUser;
+    private User mUser;
 
 
     @Override
@@ -58,6 +62,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
         //configurações iniciais
         mStorageReference = ConfigFirebase.getFirebaseStorage();
         mIdUser = UserFirebase.getIdUser();
+        mUser = UserFirebase.getDataUser();
 
         //validar permissões
         Permission.validatePermissions(mPermissionsNeeded, this, 1);
@@ -66,6 +71,7 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
         mImageButtonGallery = findViewById(R.id.imageButtonGallery);
         mCircleImageViewProfile = findViewById(R.id.circleImageViewProfilePic);
         mEditProfileName = findViewById(R.id.editTextTextPersonNameConfig);
+        mImageViewUpdateName = findViewById(R.id.imageViewUpdateName);
 
         Toolbar toolbar = findViewById(R.id.toolbarMain);
         toolbar.setTitle(R.string.config);
@@ -102,6 +108,19 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
                 Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 if(i.resolveActivity(getPackageManager())!= null){
                     startActivityForResult(i, mSELECTION_GALLERY);
+                }
+            }
+        });
+
+        mImageViewUpdateName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = mEditProfileName.getText().toString();
+                boolean result = UserFirebase.updateNameUser(name);
+                if(result){
+                    mUser.setName(name);
+                    mUser.update();
+                    Toast.makeText(ConfigurationsUserActivity.this, R.string.sucess_update_name, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -164,7 +183,11 @@ public class ConfigurationsUserActivity extends AppCompatActivity {
     }
 
     public void updateProfilePicUser(Uri url){
-        UserFirebase.updatePicUser(url);
+        boolean result = UserFirebase.updatePicUser(url);
+        if(result){
+            mUser.setProfilePic(url.toString());
+            mUser.update();
+        }
     }
 
     @Override

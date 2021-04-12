@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import com.example.whatsapp.R;
 import com.example.whatsapp.config.ConfigFirebase;
+import com.example.whatsapp.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,5 +74,20 @@ public class UserFirebase {
         }
 
 
+    }
+
+    public static User getDataUser(){
+        FirebaseUser firebaseUser = getUser();
+        User user = new User();
+        user.setEmail(firebaseUser.getEmail());
+        user.setName(firebaseUser.getDisplayName());
+
+        if(firebaseUser.getPhotoUrl() == null){
+            user.setProfilePic("");
+        }else {
+            user.setProfilePic(firebaseUser.getPhotoUrl().toString());
+        }
+
+        return user;
     }
 }

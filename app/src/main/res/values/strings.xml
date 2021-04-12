@@ -31,4 +31,5 @@
     <string name="confirm">Confirmar</string>
     <string name="error_upload">Erro ao fazer upload da imagem</string>
     <string name="success_upload">Sucesso ao fazer upload da imagem</string>
+    <string name="sucess_update_name">Nome atualizado com sucesso</string>
 </resources>
