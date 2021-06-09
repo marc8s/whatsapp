@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 import com.example.whatsapp.R;
 import com.example.whatsapp.adapter.ContactsAdapter;
 import com.example.whatsapp.config.ConfigFirebase;
+import com.example.whatsapp.helper.UserFirebase;
 import com.example.whatsapp.model.User;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,7 @@ public class ContactsFragment extends Fragment {
     private ArrayList<User> mListContacts = new ArrayList<>();
     private DatabaseReference mUserRefFirebase;
     private ValueEventListener mValueEventListenerContacts;
+    private FirebaseUser mCurrentlyUser;
     /*// TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -84,6 +87,7 @@ public class ContactsFragment extends Fragment {
         //Configurações iniciais
         mRecyclerViewListContacts = view.findViewById(R.id.recyclerViewContacts);
         mUserRefFirebase = ConfigFirebase.getFirebaseDatabase().child("user");
+        mCurrentlyUser = UserFirebase.getUser();
         //Configurar adapter
         mAdapter = new ContactsAdapter(mListContacts, getActivity());
         //Configurar recyclerview
@@ -114,7 +118,11 @@ public class ContactsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot data: snapshot.getChildren()){
                     User user = data.getValue(User.class);
-                    mListContacts.add(user);
+                    //logica para não exibir usuario atual na listagem de usuarios disponiveis
+                    String emailCurrentlyUser = mCurrentlyUser.getEmail();
+                    if(!emailCurrentlyUser.equals(user.getEmail())){
+                        mListContacts.add(user);
+                    }
                 }
                 mAdapter.notifyDataSetChanged();
             }
