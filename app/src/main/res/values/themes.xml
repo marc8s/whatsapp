@@ -19,4 +19,13 @@
         <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
         <item name="colorOnPrimary">@color/colorAccent</item>
     </style>
+
+    <style name="Theme.Whatsapp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Whatsapp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Whatsapp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.whatsapp">
+
     <uses-feature
         android:name="android.hardware.camera2"
-        android:required="true"
-        />
+        android:required="true" />
 
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission
-        android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -20,10 +17,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Whatsapp">
         <activity
+            android:name=".view.ChatActivity"
+            android:parentActivityName=".view.HomeActivity"
+            android:label="@string/title_activity_chat"
+            android:theme="@style/Theme.Whatsapp.NoActionBar"/>
+        <activity
             android:name=".view.ConfigurationsUserActivity"
-            android:parentActivityName=".view.HomeActivity">
-
-        </activity>
+            android:parentActivityName=".view.HomeActivity" />
         <activity android:name=".view.HomeActivity" />
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.MainActivity">

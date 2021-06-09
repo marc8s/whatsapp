@@ -1,5 +1,6 @@
 package com.example.whatsapp.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,15 +8,22 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.example.whatsapp.R;
 import com.example.whatsapp.adapter.ContactsAdapter;
 import com.example.whatsapp.config.ConfigFirebase;
+import com.example.whatsapp.helper.RecyclerItemClickListener;
 import com.example.whatsapp.helper.UserFirebase;
 import com.example.whatsapp.model.User;
+import com.example.whatsapp.view.ChatActivity;
+import com.example.whatsapp.view.HomeActivity;
+import com.example.whatsapp.view.RegisterActivity;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,7 +103,35 @@ public class ContactsFragment extends Fragment {
         mRecyclerViewListContacts.setLayoutManager(layoutManager);
         mRecyclerViewListContacts.setHasFixedSize(true);
         mRecyclerViewListContacts.setAdapter(mAdapter);
+        //Configurar evento de click no recyclerview
+        mRecyclerViewListContacts.addOnItemTouchListener(
+               new RecyclerItemClickListener(
+                       getActivity(),
+                       mRecyclerViewListContacts,
+                       new RecyclerItemClickListener.OnItemClickListener() {
+                           @Override
+                           public void onItemClick(View view, int position) {
+                               Toast.makeText(getActivity(), "clique", Toast.LENGTH_SHORT).show();
+                               //Não estava detectando o clique, joguei pra o clique longo
+                               //Intent i = new Intent(getActivity(), ChatActivity.class);
+                               //startActivity(i);
+                           }
 
+                           @Override
+                           public void onLongItemClick(View view, int position) {
+                               //Toast.makeText(getActivity(), "clique longo", Toast.LENGTH_SHORT).show();
+                               Intent i = new Intent(getActivity(), ChatActivity.class);
+                               startActivity(i);
+
+                           }
+
+                           @Override
+                           public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                           }
+                       }
+               )
+        );
 
         return view;
     }
